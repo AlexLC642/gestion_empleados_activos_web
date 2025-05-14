@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Activos de {{ empleado[2] }} {{ empleado[3] }}{% endblock %}
+
+{% block content %}
+<div class="contenedor">
+  <h2>Activos asignados a: {{ empleado[2] }} {{ empleado[3] }}</h2>
+  <p><strong>Departamento:</strong> {{ empleado[6] }} | <strong>Puesto:</strong> {{ empleado[7] }}</p>
+
+  <!-- Exportar PDF -->
+  <div style="text-align: right; margin-bottom: 15px;">
+    <a href="{{ url_for('reportes_bp.generar_reporte', id_empleado=empleado[0]) }}" target="_blank">
+      <button type="button">📄 Exportar PDF</button>
+    </a>
+  </div>
+
+  <!-- Solo el administrador puede agregar activos -->
+  {% if session.get('rol') == 'admin' %}
+  <form action="{{ url_for('activos_bp.agregar_activo', id_empleado=empleado[0]) }}" method="POST" class="formulario-grid">
+    <h3>Agregar Activo</h3>
+    <div class="form-row">
+      <input type="text" name="numero_activo" placeholder="Número de Activo" required>
+      <input type="text" name="descripcion" placeholder="Descripción" required>
+    </div>
+    <div class="form-row">
+      <input type="date" name="fecha_compra" required>
+      <input type="text" name="numero_factura" placeholder="Número de Factura" required>
+    </div>
+    <div class="form-row">
+      <input type="number" name="monto" step="0.01" placeholder="Monto (Q)" required>
+    </div>
+    <div class="form-row">
+      <button type="submit">Guardar Activo</button>
+    </div>
+  </form>
+  {% endif %}
+
+  <!-- Tabla de activos -->
+  <h3>Listado de Activos</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Número</th>
+        <th>Descripción</th>
+        <th>Fecha</th>
+        <th>Factura</th>
+        <th>Monto</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in activos %}
+      <tr>
+        <td>{{ a[0] }}</td>
+        <td>{{ a[1] }}</td>
+        <td>{{ a[2] }}</td>
+        <td>{{ a[3] }}</td>
+        <td>{{ a[4] }}</td>
+        <td>Q {{ "%.2f"|format(a[5]) }}</td>
+        <td>
+          {% if session.get('rol') == 'admin' %}
+            <a href="{{ url_for('activos_bp.editar_activo', id_activo=a[0]) }}">Editar</a> |
+            <a href="{{ url_for('activos_bp.eliminar_activo_route', id_activo=a[0], id_empleado=empleado[0]) }}" onclick="return confirm('¿Eliminar este activo?')">Eliminar</a>
+          {% else %}
+            Sin permisos
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7">No hay activos asignados.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <br>
+  {% if session.get('rol') == 'admin' %}
+    <a href="{{ url_for('empleados_bp.listar_empleados') }}">⬅ Volver a empleados</a>
+  {% else %}
+    <a href="{{ url_for('auth_bp.panel_empleado') }}">⬅ Volver a mi panel</a>
+  {% endif %}
+</div>
+{% endblock %}

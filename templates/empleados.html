@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Empleados{% endblock %}
+
+{% block content %}
+<div class="contenedor">
+  <h2>Gestión de Empleados</h2>
+
+  <!-- Formulario nuevo -->
+  <form action="{{ url_for('empleados_bp.agregar_empleado') }}" method="POST" class="formulario-grid">
+    <h3>Agregar Nuevo Empleado</h3>
+    <div class="form-row">
+      <input type="text" name="codigo" placeholder="Código" required>
+      <input type="text" name="nombres" placeholder="Nombres" required>
+    </div>
+    <div class="form-row">
+      <input type="text" name="apellidos" placeholder="Apellidos" required>
+      <input type="text" name="direccion" placeholder="Dirección" required>
+    </div>
+    <div class="form-row">
+      <input type="text" name="telefono" placeholder="Teléfono (8 dígitos)" pattern="[0-9]{8}" required>
+      <input type="text" name="departamento" placeholder="Departamento" required>
+    </div>
+    <div class="form-row">
+      <input type="text" name="puesto" placeholder="Puesto" required>
+    </div>
+    <div class="form-row">
+      <button type="submit">Guardar</button>
+    </div>
+  </form>
+
+  <!-- Tabla de empleados -->
+  <h3>Lista de Empleados</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Departamento</th>
+        <th>Puesto</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for emp in empleados %}
+      <tr>
+        <td>{{ emp[0] }}</td>
+        <td>{{ emp[1] }}</td>
+        <td>{{ emp[2] }} {{ emp[3] }}</td>
+        <td>{{ emp[4] }}</td>
+        <td>{{ emp[5] }}</td>
+        <td>{{ emp[6] }}</td>
+        <td>{{ emp[7] }}</td>
+        <td>
+          <a href="{{ url_for('activos_bp.ver_activos', id_empleado=emp[0]) }}">Activos</a> |
+          <a href="{{ url_for('empleados_bp.editar_empleado', id=emp[0]) }}">Editar</a> |
+          <a href="{{ url_for('empleados_bp.eliminar_empleado_route', id=emp[0]) }}" onclick="return confirm('¿Eliminar este empleado?')">Eliminar</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8">No hay empleados registrados.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

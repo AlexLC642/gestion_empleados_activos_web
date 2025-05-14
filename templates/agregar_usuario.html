@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Agregar Usuario{% endblock %}
+
+{% block content %}
+<div class="contenedor">
+  <h2>Crear Nuevo Usuario</h2>
+
+  <form method="POST" class="formulario-grid" style="max-width: 600px; margin: auto;">
+    <div class="form-row">
+      <input type="text" name="username" placeholder="Nombre de Usuario" required>
+      <input type="password" name="password" placeholder="Contraseña" required>
+    </div>
+    <div class="form-row">
+      <input type="text" name="nombre" placeholder="Nombre completo" required>
+      <select name="rol" required>
+        <option value="">Selecciona un rol</option>
+        <option value="admin">Administrador</option>
+        <option value="empleado">Empleado</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <select name="id_empleado">
+        <option value="">(Opcional) Asignar a empleado</option>
+        {% for e in empleados %}
+          <option value="{{ e[0] }}">{{ e[1] }} {{ e[2] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-row">
+      <button type="submit">Guardar</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

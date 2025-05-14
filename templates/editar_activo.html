@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Editar Activo{% endblock %}
+
+{% block content %}
+<div class="contenedor">
+  <h2>Editar Activo</h2>
+
+  <form method="POST" class="formulario-grid">
+    <div class="form-row">
+      <input type="text" name="numero_activo" value="{{ activo[1] }}" placeholder="Número de Activo" required>
+      <input type="text" name="descripcion" value="{{ activo[2] }}" placeholder="Descripción" required>
+    </div>
+    <div class="form-row">
+      <input type="date" name="fecha_compra" value="{{ activo[3] }}" required>
+      <input type="text" name="numero_factura" value="{{ activo[4] }}" placeholder="Factura" required>
+    </div>
+    <div class="form-row">
+      <input type="number" name="monto" value="{{ activo[5] }}" step="0.01" placeholder="Monto" required>
+    </div>
+    <input type="hidden" name="id_empleado" value="{{ activo[6] }}">
+    <div class="form-row">
+      <button type="submit">Guardar Cambios</button>
+    </div>
+  </form>
+
+  <br>
+  <a href="{{ url_for('activos_bp.ver_activos', id_empleado=activo[6]) }}">⬅ Volver a activos</a>
+</div>
+{% endblock %}

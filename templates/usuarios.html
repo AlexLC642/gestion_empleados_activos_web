@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Usuarios{% endblock %}
+
+{% block content %}
+<div class="contenedor">
+  <h2>Usuarios Registrados</h2>
+  <a href="{{ url_for('usuarios_bp.agregar_usuario') }}">
+    <button>➕ Nuevo Usuario</button>
+  </a>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Nombre</th>
+        <th>Rol</th>
+        <th>Empleado Vinculado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in usuarios %}
+      <tr>
+        <td>{{ u[0] }}</td>
+        <td>{{ u[1] }}</td>
+        <td>{{ u[2] }}</td>
+        <td>{{ u[3] }}</td>
+        <td>{{ u[4] or 'Sin vincular' }}</td>
+        <td>
+          <a href="{{ url_for('usuarios_bp.editar_usuario', id=u[0]) }}">✏️ Editar</a> |
+          <a href="{{ url_for('usuarios_bp.eliminar_usuario', id=u[0]) }}" onclick="return confirm('¿Eliminar este usuario?')">❌ Eliminar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

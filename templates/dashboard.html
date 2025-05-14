@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="contenedor">
+  <h2>📊 Panel Administrativo</h2>
+
+  <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+    <div class="card">
+      <h3>Total Empleados</h3>
+      <p>{{ total_empleados }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Total Activos</h3>
+      <p>{{ total_activos }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Total Usuarios</h3>
+      <p>{{ total_usuarios }}</p>
+    </div>
+
+    <div class="card" style="flex: 1;">
+      <h3>Último Activo Agregado</h3>
+      {% if ultimo_activo %}
+        <p><strong>Número:</strong> {{ ultimo_activo[0] }}</p>
+        <p><strong>Descripción:</strong> {{ ultimo_activo[1] }}</p>
+        <p><strong>Fecha:</strong> {{ ultimo_activo[2] }}</p>
+      {% else %}
+        <p>No hay activos registrados aún.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <br>
+  <div style="display: flex; gap: 10px;">
+    <a href="{{ url_for('empleados_bp.listar_empleados') }}"><button>👥 Ver Empleados</button></a>
+    <a href="{{ url_for('usuarios_bp.listar_usuarios') }}"><button>👤 Ver Usuarios</button></a>
+    <a href="{{ url_for('inicio') }}"><button>🏠 Volver al Inicio</button></a>
+  </div>
+</div>
+{% endblock %}

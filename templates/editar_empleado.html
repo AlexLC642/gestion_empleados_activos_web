@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Editar Empleado{% endblock %}
+
+{% block content %}
+<div class="contenedor">
+  <h2>Editar Empleado</h2>
+
+  <form method="POST" class="formulario-grid">
+    <div class="form-row">
+      <input type="text" name="codigo" value="{{ empleado[1] }}" placeholder="Código" required>
+      <input type="text" name="nombres" value="{{ empleado[2] }}" placeholder="Nombres" required>
+    </div>
+    <div class="form-row">
+      <input type="text" name="apellidos" value="{{ empleado[3] }}" placeholder="Apellidos" required>
+      <input type="text" name="direccion" value="{{ empleado[4] }}" placeholder="Dirección" required>
+    </div>
+    <div class="form-row">
+      <input type="text" name="telefono" value="{{ empleado[5] }}" placeholder="Teléfono (8 dígitos)" pattern="[0-9]{8}" required>
+      <input type="text" name="departamento" value="{{ empleado[6] }}" placeholder="Departamento" required>
+    </div>
+    <div class="form-row">
+      <input type="text" name="puesto" value="{{ empleado[7] }}" placeholder="Puesto" required>
+    </div>
+    <div class="form-row">
+      <button type="submit">Guardar Cambios</button>
+    </div>
+  </form>
+
+  <br>
+  <a href="{{ url_for('empleados_bp.listar_empleados') }}">⬅ Volver a empleados</a>
+</div>
+{% endblock %}

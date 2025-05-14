@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Reporte de Activos{% endblock %}
+
+{% block content %}
+<h2>Generar Reporte PDF</h2>
+<p>Selecciona el ID de un empleado para generar su reporte de activos en formato PDF.</p>
+
+<form method="GET" action="{{ url_for('reportes_bp.generar_reporte', id_empleado=1) }}" target="_blank">
+  <label for="id_empleado">ID del Empleado:</label>
+  <input type="number" name="id_empleado" id="id_empleado" value="1" required>
+  <button type="submit">📄 Generar Reporte</button>
+</form>
+
+<a href="{{ url_for('empleados_bp.listar_empleados') }}">⬅ Volver</a>
+{% endblock %}

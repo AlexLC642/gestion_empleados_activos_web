@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Editar Usuario{% endblock %}
+
+{% block content %}
+<div class="contenedor">
+  <h2>Editar Usuario</h2>
+
+  <form method="POST" class="formulario-grid" style="max-width: 600px; margin: auto;">
+    <div class="form-row">
+      <input type="text" name="username" value="{{ usuario[1] }}" placeholder="Nombre de Usuario" required>
+      <input type="password" name="password" value="{{ usuario[2] }}" placeholder="Contraseña" required>
+    </div>
+    <div class="form-row">
+      <input type="text" name="nombre" value="{{ usuario[3] }}" placeholder="Nombre completo" required>
+      <select name="rol" required>
+        <option value="">Selecciona un rol</option>
+        <option value="admin" {% if usuario[4] == 'admin' %}selected{% endif %}>Administrador</option>
+        <option value="empleado" {% if usuario[4] == 'empleado' %}selected{% endif %}>Empleado</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <select name="id_empleado">
+        <option value="">(Opcional) Asignar a empleado</option>
+        {% for e in empleados %}
+          <option value="{{ e[0] }}" {% if usuario[5] == e[0] %}selected{% endif %}>
+            {{ e[1] }} {{ e[2] }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-row">
+      <button type="submit">Guardar Cambios</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
